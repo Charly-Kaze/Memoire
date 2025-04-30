@@ -1,0 +1,5 @@
+streamlit
+fpdf
+jira 
+pandas 
+jinja2 
