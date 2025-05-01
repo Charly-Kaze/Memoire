@@ -19,7 +19,7 @@ class PDF(FPDF):
 def generer_rapport():
     # Connexion à JIRA
     email = "charlykaze88@gmail.com"
-    api_token ="ATATT3xFfGF0dAblcwzGAgiFPW-CEUf3m49XbzPeT5eABUMK1XzLbAmNvmSZ8Y23ayz1aQlsPE39YcVENFHWrSpeUHbJRQ0GBNXbXOShlRWvBtPIGI50fjdt3ilNtsfs1B68kXjAKIp2uBG8gAQTxA6_68bP9eLfOWMvkUQfXvAl5c8Jgt6sd7M=AE342320"
+    api_token ="ATATT3xFfGF0hjYbn79F6hl6n2lHxp2jYE369IJNt9gTHhqdVzeXSHmCRZK8OE9UqdvkHj_IxUcat4Vef3HOXz_dZXxCDCXOYiE6lBSkGEoG8D7s4QuIbqHtQNfoc4OKfIZuf0gs_p-YSKRdd9qsVD9CgX4nQ1PekgxaxKNJ6nVtB_Ul5DNdjYI=7202BB45"
     server = "https://charlykaze88.atlassian.net"
 
     jira = JIRA(server=server, basic_auth=(email, api_token))
