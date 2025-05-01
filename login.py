@@ -79,7 +79,7 @@ else:
                 cur = conn.cursor()
                 cur.execute('SELECT * FROM "Users" WHERE email = %s', (email,))
                 if cur.fetchone():
-                    cur.execute("UPDATE Users SET mdp = %s WHERE email = %s", (new_mdp, email))
+                    cur.execute('UPDATE "Users" SET "MDP" = %s WHERE email = %s', (new_mdp, email))
                     conn.commit()
                     st.success("Mot de passe mis à jour avec succès.")
                     st.session_state.reset_mode = False
