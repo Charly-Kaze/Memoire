@@ -1,6 +1,6 @@
 import streamlit as st
 import psycopg2
-import streamlit-extras
+from streamlit_extras.switch_page_button import switch_page
 
 # Connexion PostgreSQL
 def connect_db():
