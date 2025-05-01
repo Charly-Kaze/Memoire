@@ -4,3 +4,4 @@ jira
 pandas 
 jinja2 
 streamlit-extras
+psycopg2
