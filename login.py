@@ -1,6 +1,5 @@
 import streamlit as st
 import psycopg2
-import UI
 
 # Connexion PostgreSQL
 def connect_db():
