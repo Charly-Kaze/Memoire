@@ -8,7 +8,6 @@ def connect_db():
         host="DB_HOST",
         database="DB_NAME",
         user="DB_USER",
-        port=DB_PORT,
         password="DB_PASSWORD"
     )
 
