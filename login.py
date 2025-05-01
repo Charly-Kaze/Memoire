@@ -5,10 +5,11 @@ from streamlit_extras.switch_page_button import switch_page
 # Connexion PostgreSQL
 def connect_db():
     return psycopg2.connect(
-        host="DB_HOST",
-        database="DB_NAME",
-        user="DB_USER",
-        password="DB_PASSWORD"
+        host = "db.pcgddrgfhlkaltzipyah.supabase.co",
+        database = "postgres",
+        user = "postgres",
+        password = "jeAYs249tiN)G2S",
+        port = 5432
     )
 
 # Configuration page
