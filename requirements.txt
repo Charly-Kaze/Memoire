@@ -4,4 +4,4 @@ jira
 pandas 
 jinja2 
 streamlit-extras
-psycopg2
+psycopg2-binary
