@@ -1,12 +1,14 @@
 @echo off
 echo Création de l'environnement virtuel...
 python -m venv venv
+
+echo Activation de l'environnement virtuel...
 call venv\Scripts\activate
 
 echo Installation des dépendances...
-python -m pip install requirements.txt
+pip install -r requirements.txt
 
 echo Lancement de l'application Streamlit...
 streamlit run UI.py
-pause
 
+pause
