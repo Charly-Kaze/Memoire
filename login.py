@@ -1,6 +1,10 @@
 import streamlit as st
 import psycopg2
+from multiapp import MultiApp
 
+
+app=MultiApp()
+app.add_app("UI", UI.app)
 # Connexion PostgreSQL
 def connect_db():
     return psycopg2.connect(
