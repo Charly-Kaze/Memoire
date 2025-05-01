@@ -15,11 +15,6 @@ def connect_db():
 st.set_page_config(page_title="Connexion", layout="centered")
 st.title("🔐 Connexion à l'application")
 
-# Si redirection est demandée
-if "page_to_redirect" in st.session_state:
-    st.page_link(f"pages/{st.session_state.pop('page_to_redirect')}", label="👉 Cliquez ici si vous n'êtes pas redirigé automatiquement")
-    st.stop()
-
 # Initialiser l'état reset_mode
 if "reset_mode" not in st.session_state:
     st.session_state.reset_mode = False
