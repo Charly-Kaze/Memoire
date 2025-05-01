@@ -1,21 +1,32 @@
 import streamlit as st
-from script_rapport_sprint import generer_rapport  # on appelle la fonction directement
-import os
 
-st.set_page_config(page_title="Rapport Sprint JIRA", layout="centered")
-st.title("Générateur de Rapport JIRA")
+# Configuration de la page
+st.set_page_config(page_title="Connexion", layout="centered")
 
-st.markdown("Clique sur le bouton ci-dessous pour générer le rapport PDF du sprint.")
+# Titre
+st.title("🔐 Connexion à l'application")
 
-if st.button("Générer le rapport PDF"):
-    try:
-        generer_rapport()  # appel direct de ta logique
-        st.success("PDF généré avec succès !")
+# Formulaire de connexion
+with st.form("login_form"):
+    nom = st.text_input("Nom")
+    email = st.text_input("Email")
+    mdp = st.text_input("Mot de passe", type="password")
 
-        if os.path.exists("rapport_sprint.pdf"):
-            with open("rapport_sprint.pdf", "rb") as f:
-                st.download_button("Télécharger le PDF", f, file_name="rapport_sprint.pdf")
-        else:
-            st.warning("Le fichier PDF n'a pas été trouvé.")
-    except Exception as e:
-        st.error(f"Erreur lors de la génération : {e}")
+    # Deux boutons
+    bouton_connexion, bouton_reset = st.columns(2)
+    with bouton_connexion:
+        submit = st.form_submit_button("Se connecter")
+
+    with bouton_reset:
+        reset = st.form_submit_button("Réinitialiser")
+
+# Actions
+if submit:
+    if nom and email and mdp:
+        st.success(f"Bienvenue, {nom} !")
+        # Tu peux ici ajouter une vérification avec une base de données
+    else:
+        st.error("Tous les champs sont requis.")
+
+if reset:
+    st.experimental_rerun()
