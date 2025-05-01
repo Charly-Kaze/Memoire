@@ -3,3 +3,4 @@ fpdf
 jira 
 pandas 
 jinja2 
+streamlit-extras
