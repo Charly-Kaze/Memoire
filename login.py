@@ -44,7 +44,9 @@ if not st.session_state.reset_mode:
                     st.session_state["auth"] = True
                     cur.close()
                     conn.close()
-                    switch_page("UI")
+                    st.session_state.page_to_redirect = "UI.py"
+                    st.experimental_rerun()
+
                 else:
                     st.error("Identifiants invalides.")
             except Exception as e:
@@ -83,7 +85,9 @@ else:
                     conn.commit()
                     st.success("Mot de passe mis à jour avec succès.")
                     st.session_state.reset_mode = False
-                    switch_page("UI")
+                    st.session_state.page_to_redirect = "UI.py"
+                    st.experimental_rerun()
+
                 else:
                     st.error("Email non trouvé.")
             except Exception as e:
