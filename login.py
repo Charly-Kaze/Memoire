@@ -19,6 +19,11 @@ st.title("🔐 Connexion à l'application")
 if "reset_mode" not in st.session_state:
     st.session_state.reset_mode = False
 
+# Vérification si l'utilisateur est authentifié
+if "auth" in st.session_state and st.session_state.auth:
+    # Affichage de la page redirigée, ici UI.py
+    st.experimental_rerun()  # Cela va forcer le rerun de l'application avec la nouvelle page définie dans st.session_state
+
 # Connexion standard
 if not st.session_state.reset_mode:
     with st.form("login_form"):
@@ -42,8 +47,8 @@ if not st.session_state.reset_mode:
                 if row and row[0] == nom and row[1] == mdp:
                     st.success(f"Bienvenue, {nom} !")
                     st.session_state["auth"] = True
-                    st.session_state.page_to_redirect = "UI.py"
-                    st.rerun()
+                    st.session_state.page_to_redirect = "UI.py"  # Ajout de la page à rediriger après la connexion
+                    st.experimental_rerun()  # Redirection immédiate après connexion réussie
                 else:
                     st.error("Identifiants invalides.")
             except Exception as e:
@@ -83,7 +88,7 @@ else:
                     st.success("Mot de passe mis à jour avec succès.")
                     st.session_state.reset_mode = False
                     st.session_state.page_to_redirect = "UI.py"
-                    st.rerun()
+                    st.experimental_rerun()  # Redirection après mise à jour du mot de passe
                 else:
                     st.error("Email non trouvé.")
             except Exception as e:
