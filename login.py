@@ -1,6 +1,5 @@
 import streamlit as st
 import psycopg2
-from streamlit_extras.switch_page_button import switch_page
 
 # Connexion PostgreSQL
 def connect_db():
@@ -16,6 +15,12 @@ def connect_db():
 st.set_page_config(page_title="Connexion", layout="centered")
 st.title("🔐 Connexion à l'application")
 
+# Si redirection est demandée
+if "page_to_redirect" in st.session_state:
+    st.page_link(f"pages/{st.session_state.pop('page_to_redirect')}", label="👉 Cliquez ici si vous n'êtes pas redirigé automatiquement")
+    st.stop()
+
+# Initialiser l'état reset_mode
 if "reset_mode" not in st.session_state:
     st.session_state.reset_mode = False
 
@@ -42,11 +47,8 @@ if not st.session_state.reset_mode:
                 if row and row[0] == nom and row[1] == mdp:
                     st.success(f"Bienvenue, {nom} !")
                     st.session_state["auth"] = True
-                    cur.close()
-                    conn.close()
                     st.session_state.page_to_redirect = "UI.py"
                     st.rerun()
-
                 else:
                     st.error("Identifiants invalides.")
             except Exception as e:
@@ -60,7 +62,7 @@ if not st.session_state.reset_mode:
 
     if reset:
         st.session_state.reset_mode = True
-        st.stop()
+        st.rerun()
 
 # Réinitialisation du mot de passe
 else:
@@ -87,7 +89,6 @@ else:
                     st.session_state.reset_mode = False
                     st.session_state.page_to_redirect = "UI.py"
                     st.rerun()
-
                 else:
                     st.error("Email non trouvé.")
             except Exception as e:
@@ -101,4 +102,4 @@ else:
 
     if annuler:
         st.session_state.reset_mode = False
-        st.experimental_rerun()
+        st.rerun()
