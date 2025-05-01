@@ -37,7 +37,7 @@ if not st.session_state.reset_mode:
             try:
                 conn = connect_db()
                 cur = conn.cursor()
-                cur.execute("SELECT Nom, MDP FROM Users WHERE email = %s", (email,))
+                cur.execute('SELECT "Nom", "MDP" FROM "Users" WHERE email = %s', (email,))
                 row = cur.fetchone()
                 if row and row[0] == nom and row[1] == mdp:
                     st.success(f"Bienvenue, {nom} !")
@@ -77,7 +77,7 @@ else:
             try:
                 conn = connect_db()
                 cur = conn.cursor()
-                cur.execute("SELECT * FROM Users WHERE email = %s", (email,))
+                cur.execute('SELECT * FROM "Users" WHERE email = %s', (email,))
                 if cur.fetchone():
                     cur.execute("UPDATE Users SET mdp = %s WHERE email = %s", (new_mdp, email))
                     conn.commit()
