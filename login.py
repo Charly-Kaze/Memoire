@@ -20,13 +20,13 @@ if "auth" not in st.session_state:
     st.session_state.auth = False
 if "reset_mode" not in st.session_state:
     st.session_state.reset_mode = False
-
+st.title("🔐 Connexion à l'application")
 # Authentifié : accès à l'app
 if st.session_state.auth:
     app = MultiApp()
     app.add_app("UI", UI.app)
     app.run()
-st.title("🔐 Connexion à l'application")
+
 # Connexion
 elif not st.session_state.reset_mode:
     with st.form("login_form"):
