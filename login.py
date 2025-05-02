@@ -1,7 +1,4 @@
 import streamlit as st
-
-
-st.set_page_config(page_title="Connexion", layout="centered")
 import psycopg2
 from multiapp import MultiApp
 import UI
@@ -16,6 +13,9 @@ def connect_db():
     )
 
 st.title("🔐 Connexion à l'application")
+
+
+st.set_page_config(page_title="Connexion", layout="centered")
 
 if "auth" not in st.session_state:
     st.session_state.auth = False
