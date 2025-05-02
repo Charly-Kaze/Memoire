@@ -3,7 +3,6 @@ import streamlit as st
 st.set_page_config(page_title="Connexion", layout="centered")
 import psycopg2
 from multiapp import MultiApp
-import UI
 
 def connect_db():
     return psycopg2.connect(
