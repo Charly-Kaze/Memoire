@@ -1,9 +1,11 @@
 import streamlit as st
+
+
+st.set_page_config(page_title="Connexion", layout="centered")
 import psycopg2
 from multiapp import MultiApp
 import UI
 
-st.set_page_config(page_title="Connexion", layout="centered")
 def connect_db():
     return psycopg2.connect(
         host="aws-0-eu-west-3.pooler.supabase.com",
@@ -13,7 +15,6 @@ def connect_db():
         password="jeAYs249tiN)G2S"
     )
 
-st.set_page_config(page_title="Connexion", layout="centered")
 st.title("🔐 Connexion à l'application")
 
 if "auth" not in st.session_state:
