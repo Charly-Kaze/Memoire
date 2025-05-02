@@ -1,5 +1,5 @@
 import streamlit as st
-from generer_rapport import generer_rapport, get_sprint_max
+from script_rapport_sprint import generer_rapport, get_sprint_max
 from jira import JIRA
 import os
 
