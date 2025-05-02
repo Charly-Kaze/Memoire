@@ -5,7 +5,7 @@ import os
 
 
 def app():
-    st.set_page_config(page_title="Rapport Sprint JIRA", layout="centered")
+    #st.set_page_config(page_title="Rapport Sprint JIRA", layout="centered")
     st.title("📋 Générateur de Rapport JIRA")
 
     email = os.getenv("JIRA_EMAIL")
