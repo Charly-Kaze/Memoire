@@ -1,22 +1,35 @@
 import streamlit as st
-from script_rapport_sprint import generer_rapport  # on appelle la fonction directement
+from script_rapport_sprint import generer_rapport, get_sprint_max
+from jira import JIRA
 import os
+
 
 def app():
     #st.set_page_config(page_title="Rapport Sprint JIRA", layout="centered")
-    st.title("Générateur de Rapport JIRA")
-    
-    st.markdown("Clique sur le bouton ci-dessous pour générer le rapport PDF du sprint.")
-    
+    st.title("📋 Générateur de Rapport JIRA")
+
+    email = os.getenv("JIRA_EMAIL")
+    api_token = os.getenv("JIRA_API_TOKEN")
+    server = "https://charlykaze88.atlassian.net"
+    jira = JIRA(server=server, basic_auth=(email, api_token))
+    sprint_max = get_sprint_max(jira)
+
+    sprint_input = st.text_input("Numéro du sprint", placeholder="ex: 5")
+    if sprint_input and not sprint_input.isdigit():
+        st.warning("Veuillez entrer un chiffre uniquement.")
+
     if st.button("Générer le rapport PDF"):
-        try:
-            generer_rapport()  # appel direct de ta logique
-            st.success("PDF généré avec succès !")
-    
-            if os.path.exists("rapport_sprint.pdf"):
-                with open("rapport_sprint.pdf", "rb") as f:
-                    st.download_button("Télécharger le PDF", f, file_name="rapport_sprint.pdf")
+        if not sprint_input or not sprint_input.isdigit():
+            st.error("Le numéro du sprint doit être un entier.")
+        else:
+            sprint_num = int(sprint_input)
+            if sprint_num > sprint_max:
+                st.warning("Nous ne sommes pas encore à ce sprint.")
             else:
-                st.warning("Le fichier PDF n'a pas été trouvé.")
-        except Exception as e:
-            st.error(f"Erreur lors de la génération : {e}")
+                filename, error = generer_rapport(sprint_num)
+                if error:
+                    st.error(error)
+                else:
+                    st.success("PDF généré avec succès !")
+                    with open(filename, "rb") as f:
+                        st.download_button("Télécharger le PDF", f, file_name=filename)
