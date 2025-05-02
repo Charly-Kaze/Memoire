@@ -3,7 +3,7 @@ from script_rapport_sprint import generer_rapport  # on appelle la fonction dire
 import os
 
 def app():
-    st.set_page_config(page_title="Rapport Sprint JIRA", layout="centered")
+    #st.set_page_config(page_title="Rapport Sprint JIRA", layout="centered")
     st.title("Générateur de Rapport JIRA")
     
     st.markdown("Clique sur le bouton ci-dessous pour générer le rapport PDF du sprint.")
