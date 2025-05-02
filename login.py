@@ -1,11 +1,8 @@
 import streamlit as st
 import psycopg2
 from multiapp import MultiApp
+import UI
 
-
-app=MultiApp()
-app.add_app("UI", UI.app)
-# Connexion PostgreSQL
 def connect_db():
     return psycopg2.connect(
         host="aws-0-eu-west-3.pooler.supabase.com",
@@ -15,26 +12,30 @@ def connect_db():
         password="jeAYs249tiN)G2S"
     )
 
-# Configuration page
 st.set_page_config(page_title="Connexion", layout="centered")
 st.title("🔐 Connexion à l'application")
 
-# Initialiser l'état reset_mode
+if "auth" not in st.session_state:
+    st.session_state.auth = False
 if "reset_mode" not in st.session_state:
     st.session_state.reset_mode = False
 
-# Connexion standard
-if not st.session_state.reset_mode:
+# Authentifié : accès à l'app
+if st.session_state.auth:
+    app = MultiApp()
+    app.add_app("UI", UI.app)
+    app.run()
+
+# Connexion
+elif not st.session_state.reset_mode:
     with st.form("login_form"):
         nom = st.text_input("Nom")
         email = st.text_input("Email")
         mdp = st.text_input("Mot de passe", type="password")
 
         col1, col2 = st.columns(2)
-        with col1:
-            submit = st.form_submit_button("Se connecter")
-        with col2:
-            reset = st.form_submit_button("Réinitialiser")
+        submit = col1.form_submit_button("Se connecter")
+        reset = col2.form_submit_button("Réinitialiser")
 
     if submit:
         if nom and email and mdp:
@@ -44,14 +45,12 @@ if not st.session_state.reset_mode:
                 cur.execute('SELECT "Nom", "MDP" FROM "Users" WHERE email = %s', (email,))
                 row = cur.fetchone()
                 if row and row[0] == nom and row[1] == mdp:
-                    st.success(f"Bienvenue, {nom} !")
-                    st.session_state["auth"] = True
-                    st.session_state.page_to_redirect = "UI.py"
+                    st.session_state.auth = True
                     st.rerun()
                 else:
                     st.error("Identifiants invalides.")
             except Exception as e:
-                st.error("Erreur de connexion à la base de données.")
+                st.error("Erreur de connexion.")
                 st.exception(e)
             finally:
                 if 'cur' in locals(): cur.close()
@@ -71,9 +70,8 @@ else:
         new_mdp = st.text_input("Nouveau mot de passe", type="password")
         confirm_mdp = st.text_input("Confirmer le mot de passe", type="password")
 
-        col1, col2 = st.columns(2)
-        valider = col1.form_submit_button("Valider")
-        annuler = col2.form_submit_button("Annuler")
+        valider = st.form_submit_button("Valider")
+        annuler = st.form_submit_button("Annuler")
 
     if valider:
         if new_mdp == confirm_mdp and new_mdp:
@@ -84,14 +82,13 @@ else:
                 if cur.fetchone():
                     cur.execute('UPDATE "Users" SET "MDP" = %s WHERE email = %s', (new_mdp, email))
                     conn.commit()
-                    st.success("Mot de passe mis à jour avec succès.")
+                    st.success("Mot de passe mis à jour.")
                     st.session_state.reset_mode = False
-                    st.session_state.page_to_redirect = "UI.py"
                     st.rerun()
                 else:
                     st.error("Email non trouvé.")
             except Exception as e:
-                st.error("Erreur de mise à jour du mot de passe.")
+                st.error("Erreur lors de la mise à jour.")
                 st.exception(e)
             finally:
                 if 'cur' in locals(): cur.close()
