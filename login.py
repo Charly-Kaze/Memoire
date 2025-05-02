@@ -3,6 +3,7 @@ import psycopg2
 from multiapp import MultiApp
 import UI
 
+st.set_page_config(page_title="Connexion", layout="centered")
 def connect_db():
     return psycopg2.connect(
         host="aws-0-eu-west-3.pooler.supabase.com",
