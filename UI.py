@@ -5,17 +5,17 @@ import os
 
 
 def app():
-    #st.set_page_config(page_title="PV de Recette", layout="centered")
-    st.title("📋 Générateur de PV de Recette")
+    #st.set_page_config(page_title="Rapport de sprint", layout="centered")
+    st.title("📋 Générateur de rapport de sprint")
 
     email = os.getenv("JIRA_EMAIL")
     api_token = os.getenv("JIRA_API_TOKEN")
     server = "https://charlykaze88.atlassian.net"
     jira = JIRA(server=server, basic_auth=(email, api_token))
     sprint_max = get_sprint_max(jira)
-    sprint_max=3
+   
 
-    sprint_input = st.text_input("Numéro de la release", placeholder="ex: 5")
+    sprint_input = st.text_input("Numéro du sprint", placeholder="ex: 5")
     if sprint_input and not sprint_input.isdigit():
         st.warning("Veuillez entrer un chiffre uniquement.")
 
