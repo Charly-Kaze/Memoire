@@ -18,14 +18,3 @@ Cette application permet de générer un **rapport PDF** contenant les tickets d
 - Interface simple via navigateur, utilisable depuis mobile
 - Téléchargement direct du PDF
 
----
-
-## Lancement (Windows)
-
-1. **Cloner ce projet** :
-   ```bash
-   git clone https://github.com/Charly-Kaze/Memoire.git
-   cd Memoire-main
-2. **Lancer le script d’installation et d’exécution** :
-   ```bash
-   .\setup_and_run.bat
